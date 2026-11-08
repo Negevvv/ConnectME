@@ -1,10 +1,14 @@
 package com.example.connectme;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.firebase.Firebase;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -12,6 +16,8 @@ public class MainActivity extends AppCompatActivity {
     private Button btnLogin;
     private Button btnSignUp;
     private Button btnLogOut;
+
+    private FirebaseAuth auth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,20 +28,23 @@ public class MainActivity extends AppCompatActivity {
         btnLogin = findViewById(R.id.btnLogin);
         btnSignUp = findViewById(R.id.btnSignUp);
         btnLogOut = findViewById(R.id.btnLogOut);
+        auth = FirebaseAuth.getInstance();
 
-        // Log In button click listener
+        // Log In button click listener - מעבר למסך התחברות LoginActivity
         btnLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Log In Clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(intent);
             }
         });
 
-        // Sign Up button click listener
+        // Sign Up button click listener - מעבר למסך הרשמה SignUpActivity
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(MainActivity.this, "Sign Up Clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MainActivity.this, SignUpActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -43,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         btnLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                auth.signOut();
                 Toast.makeText(MainActivity.this, "Log Out Clicked", Toast.LENGTH_SHORT).show();
             }
         });
